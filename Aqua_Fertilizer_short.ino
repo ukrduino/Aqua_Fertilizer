@@ -172,26 +172,19 @@ void vnestyUdobreni(Udobrenie udo, int index) {
     analogWrite(pump1Pin, udo._speed);
     delay(udo._seconds * 1000);
     analogWrite(pump1Pin, 0);
-    udobrenia[index]._done = true;
-    printUdobrenia(udobrenia);
-    return;
   }
   if (udo._pump == 2) {
     analogWrite(pump2Pin, udo._speed);
     delay(udo._seconds * 1000);
     analogWrite(pump2Pin, 0);
-    udo._done = true;
-    printUdobrenia(udobrenia);
-    return;
   }
   if (udo._pump == 3) {
     analogWrite(pump3Pin, udo._speed);
     delay(udo._seconds * 1000);
     analogWrite(pump3Pin, 0);
-    udo._done = true;
-    printUdobrenia(udobrenia);
-    return;
   }
+  udobrenia[index]._done = true;
+  printUdobrenia(udobrenia);
 }
 
 void  readButtons() {
