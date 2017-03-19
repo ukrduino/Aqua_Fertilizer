@@ -48,19 +48,19 @@ struct Udobrenie {
   bool _pump_active; // Для датчика уровня удобрения
   byte _hour; // Время внесения
   byte _pump; // Номер помпы
-  byte _seconds; // Секунды прокачки
+  byte _seconds; // Секунды прокачки примерно 4 сек - 3,5 мл
   byte _speed; // Скорость работы мотора PWM  0- 255
   bool _done;
 };
 
 Udobrenie udobrenia[6] = {
   //String _name, bool _active; bool _pump_active; byte _hour; byte _pump; byte _seconds; byte _speed; byte _period; bool _done;
-  {"macro", true, true, 21, 1, 2, 0, false},
-  {"micro", true, true, 6, 2, 1, 0, false},
-  {"al_co2", true, true, 6, 3, 2, 0, false},
-  {"macro", false, true, 0, 1, 0, 0, false},
-  {"micro", true, true, 15, 2, 0, 0, false},
-  {"al_co2", true, true, 15, 3, 0, 0, false}
+  {"macro", true, true, 21, 1, 5, 255, false},
+  {"micro", true, true, 6, 2, 2, 255, false},
+  {"al_co2", true, true, 6, 3, 4, 255, false},
+  {"macro", false, true, 0, 1, 0, 255, false},
+  {"micro", true, true, 15, 2, 2, 255, false},
+  {"al_co2", true, true, 15, 3, 4, 255, false}
 };
 
 const byte pump1Pin = 8;    // the number of the pin for pump #1
@@ -84,7 +84,7 @@ void setup() {
   analogWrite(pump1Pin, 0);
   analogWrite(pump2Pin, 0);
   analogWrite(pump3Pin, 0);
-  analogWrite(ledsPin, 150);
+  analogWrite(ledsPin, 50);
   // Setup Serial connection
   Serial.begin(115200);
   // Initialize the rtc object
@@ -99,9 +99,9 @@ void setup() {
   Serial.println(currentTime.dow);
 
   // The following lines can be uncommented to set the date and time
-  //          rtc.setDOW(FRIDAY);     // Set Day-of-Week to MONDAY
-  //          rtc.setTime(17, 58, 00);     // Set the time to 08:54:00 (24hr format)
-  //          rtc.setDate(17, 3, 2017);   // Set the date to 17 March 2017
+  //rtc.setDOW(SUNDAY);     // Set Day-of-Week to MONDAY
+  //rtc.setTime(21, 29, 45);     // Set the time to 08:54:00 (24hr format)
+  //rtc.setDate(19, 3, 2017);   // Set the date to 17 March 2017
 
   updateUdobreniaAfterReset(udobrenia);
   printUdobrenia(udobrenia);
@@ -162,31 +162,34 @@ void checkUdobrenia(Udobrenie* udobrenia) {
         && udobrenia[i]._active == true
         && udobrenia[i]._pump_active == true
         && udobrenia[i]._done == false) {
-      vnestyUdobreni(udobrenia[i]);
+      vnestyUdobreni(udobrenia[i], i);
     };
   };
 }
 
-void vnestyUdobreni(Udobrenie udo) {
+void vnestyUdobreni(Udobrenie udo, int index) {
   if (udo._pump == 1) {
     analogWrite(pump1Pin, udo._speed);
-    delay(udo._seconds);
+    delay(udo._seconds * 1000);
     analogWrite(pump1Pin, 0);
-    udo._done = true;
+    udobrenia[index]._done = true;
+    printUdobrenia(udobrenia);
     return;
   }
   if (udo._pump == 2) {
     analogWrite(pump2Pin, udo._speed);
-    delay(udo._seconds);
+    delay(udo._seconds * 1000);
     analogWrite(pump2Pin, 0);
     udo._done = true;
+    printUdobrenia(udobrenia);
     return;
   }
   if (udo._pump == 3) {
     analogWrite(pump3Pin, udo._speed);
-    delay(udo._seconds);
+    delay(udo._seconds * 1000);
     analogWrite(pump3Pin, 0);
     udo._done = true;
+    printUdobrenia(udobrenia);
     return;
   }
 }
