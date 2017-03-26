@@ -57,10 +57,10 @@ Udobrenie udobrenia[6] = {
   //String _name, bool _active; bool _pump_active; byte _hour; byte _pump; byte _seconds; byte _speed; byte _period; bool _done;
   {"macro", true, true, 21, 1, 5, 255, false},
   {"micro", true, true, 6, 2, 2, 255, false},
-  {"al_co2", true, true, 6, 3, 4, 255, false},
+  {"al_co2", true, true, 7, 3, 4, 255, false},
   {"macro", false, true, 0, 1, 0, 255, false},
   {"micro", true, true, 15, 2, 2, 255, false},
-  {"al_co2", true, true, 15, 3, 4, 255, false}
+  {"al_co2", true, true, 16, 3, 4, 255, false}
 };
 
 const byte pump1Pin = 8;    // the number of the pin for pump #1
@@ -100,8 +100,8 @@ void setup() {
 
   // The following lines can be uncommented to set the date and time
   //rtc.setDOW(SUNDAY);     // Set Day-of-Week to MONDAY
-  //rtc.setTime(21, 29, 45);     // Set the time to 08:54:00 (24hr format)
-  //rtc.setDate(19, 3, 2017);   // Set the date to 17 March 2017
+  //rtc.setTime(18, 54, 00);     // Set the time to 08:54:00 (24hr format)
+  //rtc.setDate(26, 3, 2017);   // Set the date to 17 March 2017
 
   updateUdobreniaAfterReset(udobrenia);
   printUdobrenia(udobrenia);
