@@ -55,11 +55,11 @@ struct Udobrenie {
 
 Udobrenie udobrenia[6] = {
   //String _name, bool _active; bool _pump_active; byte _hour; byte _pump; byte _seconds; byte _speed; byte _period; bool _done;
-  {"macro", true, true, 21, 1, 5, 255, false},
-  {"micro", true, true, 6, 2, 2, 255, false},
+  {"macro", true, true, 21, 1, 6, 255, false},
+  {"micro", true, true, 6, 2, 3, 255, false},
   {"al_co2", true, true, 7, 3, 4, 255, false},
   {"macro", false, true, 0, 1, 0, 255, false},
-  {"micro", true, true, 15, 2, 2, 255, false},
+  {"micro", true, true, 15, 2, 3, 255, false},
   {"al_co2", true, true, 16, 3, 4, 255, false}
 };
 
